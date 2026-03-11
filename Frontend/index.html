@@ -2,23 +2,30 @@
 <html lang="es">
 
 <head>
+   <!-- Configuración básica del documento -->
    <meta charset="utf-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+   <!-- Título que aparece en la pestaña del navegador -->
    <title>QuantumTech | Tienda Online</title>
 
+   <!-- Hojas de estilo externas -->
+   <!-- bootstrap.min.css: framework CSS para diseño responsivo -->
+   <!-- style.css y responsive.css: tus estilos propios -->
    <link rel="stylesheet" href="css/bootstrap.min.css">
    <link rel="stylesheet" href="css/style.css">
    <link rel="stylesheet" href="css/responsive.css">
    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
 
    <style>
+      /* Hace que las imágenes no se salgan de su contenedor */
       img {
          max-width: 100%;
          height: auto;
       }
 
+      /* Tarjeta visual de cada producto */
       .product_box {
          text-align: center;
          padding: 20px;
@@ -30,26 +37,31 @@
          flex-direction: column;
       }
 
+      /* Efecto al pasar el mouse sobre el producto */
       .product_box:hover {
          transform: translateY(-5px);
          box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.15);
       }
 
+      /* Hace que el botón del producto ocupe todo el ancho */
       .product_box button {
          width: 100%;
          margin-top: auto;
       }
 
+      /* Ajusta el tamaño de la imagen del producto */
       .product_box img {
          height: 150px;
          object-fit: contain;
          margin-bottom: 15px;
       }
 
+      /* Espaciado interno del bloque del banner */
       .text-bg {
          padding: 20px;
       }
 
+      /* Campos del formulario de contacto */
       .contactus,
       .textarea {
          width: 100%;
@@ -57,6 +69,7 @@
          padding: 10px;
       }
 
+      /* Notificación flotante al agregar al carrito */
       .toast-cart {
          position: fixed;
          top: 20px;
@@ -72,11 +85,13 @@
          z-index: 9999;
       }
 
+      /* Clase que vuelve visible la notificación */
       .toast-cart.show {
          opacity: 1;
          transform: translateY(0);
       }
 
+      /* Contenedor de los botones de paginación */
       .pagination-controls {
          display: flex;
          justify-content: center;
@@ -89,6 +104,7 @@
          min-width: 120px;
       }
 
+      /* Caja visual del indicador de página */
       .page-info {
          font-size: 16px;
          font-weight: bold;
@@ -98,11 +114,12 @@
          border-radius: 20px;
       }
 
+      /* Hace que al desplazarse al título no quede tapado por el navbar */
       .products h2 {
          scroll-margin-top: 100px;
       }
 
-      /* ESTILOS PARA FILTROS */
+      /* Panel lateral de filtros */
       .filtros-panel {
          background: white;
          padding: 20px;
@@ -124,31 +141,14 @@
          font-size: 14px;
       }
 
-      .filtro-marcas {
-         max-height: 150px;
+      /* Área con scroll para listas largas de filtros */
+      .filtro-marcas, .filtro-categorias {
+         max-height: 250px;
          overflow-y: auto;
          padding-right: 5px;
       }
 
-      .filtro-marcas::-webkit-scrollbar {
-         width: 5px;
-      }
-
-      .filtro-marcas::-webkit-scrollbar-track {
-         background: #f1f1f1;
-      }
-
-      .filtro-marcas::-webkit-scrollbar-thumb {
-         background: #17a2b8;
-         border-radius: 5px;
-      }
-      .filtro-marcas, .filtro-categorias {
-         max-height: 250px; /* altura máxima antes de mostrar scroll */
-         overflow-y: auto;  /* habilita scroll vertical */
-         padding-right: 5px; /* para evitar que el scroll tape el contenido */
-      }
-
-      /* Opcional: estilo del scroll para navegadores modernos */
+      /* Apariencia del scroll en navegadores webkit */
       .filtro-marcas::-webkit-scrollbar,
       .filtro-categorias::-webkit-scrollbar {
          width: 6px;
@@ -159,6 +159,7 @@
          background-color: rgba(0,0,0,0.3);
          border-radius: 3px;
       }
+
       .form-check {
          margin-bottom: 8px;
       }
@@ -170,11 +171,13 @@
          cursor: pointer;
       }
 
+      /* Cambia color de etiqueta cuando el checkbox está activo */
       .form-check-input:checked + .form-check-label {
          color: #17a2b8;
          font-weight: 600 !important;
       }
 
+      /* Tarjeta visual para cada rango de precio */
       .rango-precio {
          background: #f8f9fa;
          padding: 10px;
@@ -195,25 +198,12 @@
          color: white;
       }
 
-      .rango-precio.active .text-muted {
-         color: rgba(255,255,255,0.8) !important;
-      }
-
       .rango-precio small {
          display: block;
          font-size: 12px;
       }
 
-      .btn-ver-mas {
-         color: #17a2b8;
-         text-decoration: none;
-         font-size: 13px;
-      }
-
-      .btn-ver-mas:hover {
-         text-decoration: underline;
-      }
-
+      /* Ajustes para pantallas pequeñas */
       @media (max-width:768px) {
          .text-bg h1 {
             font-size: 28px;
@@ -228,45 +218,58 @@
          }
       }
    </style>
-
-   <!-- VERIFICAR SESIÓN -->
-   <script>
-      (function() {
-          const usuario = localStorage.getItem('usuario');
-          if (!usuario) {
-              window.location.href = 'login.html';
-          }
-      })();
-   </script>
-
 </head>
 
 <body class="main-layout">
 
+   <!-- ===================== ENCABEZADO / NAVBAR ===================== -->
+   <!-- Esta barra superior permite navegar entre secciones -->
+   <!-- También muestra el botón Login o los datos del usuario si hay sesión -->
    <header>
       <div class="header">
-         <div class="container">
+         <div class="container-fluid px-0">
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-               <a class="navbar-brand font-weight-bold text-info" href="#">QuantumTech</a>
+
+               <!-- Marca o nombre del sitio -->
+               <a class="navbar-brand font-weight-bold text-info" href="index.html">QuantumTech</a>
+
+               <!-- Botón hamburguesa para móviles -->
                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
                   <span class="navbar-toggler-icon"></span>
                </button>
+
+               <!-- Contenido del navbar -->
                <div class="collapse navbar-collapse" id="navbarNav">
                   <ul class="navbar-nav ml-auto" id="main-nav">
+
+                     <!-- Enlace a inicio -->
                      <li class="nav-item">
-                        <a class="nav-link active" href="#">Inicio</a>
+                        <a class="nav-link active" href="index.html">Inicio</a>
                      </li>
+
+                     <!-- Enlace a productos -->
                      <li class="nav-item">
-                        <a class="nav-link" href="#">Productos</a>
+                        <a class="nav-link" href="#titulo-productos">Productos</a>
                      </li>
+
+                     <!-- Enlace a categorías -->
                      <li class="nav-item">
                         <a class="nav-link" href="#">Categorías</a>
                      </li>
+
+                     <!-- Panel Admin: inicia oculto y se muestra solo si el usuario es administrador -->
+                     <li class="nav-item" id="admin-item" style="display: none;">
+                        <a class="nav-link" href="admin.html">Panel Admin</a>
+                     </li>
+
+                     <!-- Botón para ir al carrito -->
                      <li class="nav-item">
                         <a class="btn btn-info ml-lg-3 mt-2 mt-lg-0" href="carrito.html">
                            🛒 Carrito (<span id="cart-count">0</span>)
                         </a>
                      </li>
+
+                     <!-- Aquí se inserta dinámicamente el botón Login o los datos del usuario -->
                      <li class="nav-item ml-lg-2" id="login-button-container">
                         <button class="btn btn-outline-light mt-2 mt-lg-0" data-toggle="modal" data-target="#loginModal">
                            <i class="fa fa-user"></i> Login
@@ -279,6 +282,8 @@
       </div>
    </header>
 
+   <!-- ===================== BANNER PRINCIPAL ===================== -->
+   <!-- Sección de bienvenida principal de la página -->
    <section class="banner_main py-5 bg-dark text-light">
       <div class="container">
          <div class="row align-items-center">
@@ -286,217 +291,118 @@
                <div class="text-bg">
                   <h1 class="text-info">Bienvenido a QuantumTech</h1>
                   <p>Tecnología gamer y profesional al mejor precio del mercado.</p>
-                  <a class="btn btn-info mt-3" href="#">Explorar Productos</a>
+                  <a class="btn btn-info mt-3" href="#titulo-productos">Explorar Productos</a>
                </div>
             </div>
+
+            <!-- Imagen decorativa del banner -->
             <div class="col-lg-6 col-md-12 text-center mt-4 mt-lg-0">
-               <img src="images/pct.png" class="img-fluid">
+               <img src="images/pct.png" class="img-fluid" alt="Equipos tecnológicos">
             </div>
          </div>
       </div>
    </section>
 
-<section class="products py-5">
-   <div class="container">
-      <div class="row">
-         <!-- PANEL DE FILTROS (columna izquierda) - SIN CAMBIOS -->
-         <div class="col-lg-3 col-md-4 mb-4">
-            <div class="filtros-panel">
-               <h5><i class="fa fa-filter"></i> Filtrar por</h5>
-               
-               <!-- Buscador -->
-               <div class="mb-4">
-                  <label class="font-weight-bold">Buscar</label>
-                  <div class="input-group">
-                     <input type="text" class="form-control" id="buscadorProductos" placeholder="Buscar productos...">
-                     <div class="input-group-append">
-                        <button class="btn btn-info" type="button">
-                           <i class="fa fa-search"></i>
-                        </button>
-                     </div>
-                  </div>
-               </div>
-               
-               <!-- Marcas -->
-               <div class="mb-4">
-                  <div class="d-flex justify-content-between align-items-center mb-2">
-                     <label class="font-weight-bold mb-0">Marca</label>
-                  </div>
-                  <div class="filtro-marcas">
-                     <div class="form-check">
-                        <input class="form-check-input filtro-marca" type="checkbox" value="Corsair">
-                        <label class="form-check-label">Corsair</label>
-                     </div>
-                     <div class="form-check">
-                        <input class="form-check-input filtro-marca" type="checkbox" value="LG">
-                        <label class="form-check-label">LG</label>
-                     </div>
-                     <div class="form-check">
-                        <input class="form-check-input filtro-marca" type="checkbox" value="Cooler Master">
-                        <label class="form-check-label">Cooler Master</label>
-                     </div>
-                     <div class="form-check">
-                        <input class="form-check-input filtro-marca" type="checkbox" value="Lenovo">
-                        <label class="form-check-label">Lenovo</label>
-                     </div>
-                     <div class="form-check">
-                        <input class="form-check-input filtro-marca" type="checkbox" value="AMD">
-                        <label class="form-check-label">AMD</label>
-                     </div>
-                     <div class="form-check">
-                        <input class="form-check-input filtro-marca" type="checkbox" value="Intel">
-                        <label class="form-check-label">Intel</label>
-                     </div>
-                     <div class="form-check">
-                        <input class="form-check-input filtro-marca" type="checkbox" value="Gigabyte">
-                        <label class="form-check-label">Gigabyte</label>
-                     </div>
-                     <div class="form-check">
-                        <input class="form-check-input filtro-marca" type="checkbox" value="ASUS">
-                        <label class="form-check-label">ASUS</label>
-                     </div>
-                     <div class="form-check">
-                        <input class="form-check-input filtro-marca" type="checkbox" value="MSI">
-                        <label class="form-check-label">MSI</label>
-                     </div>
-                     <div class="form-check">
-                        <input class="form-check-input filtro-marca" type="checkbox" value="Logitech">
-                        <label class="form-check-label">Logitech</label>
-                     </div>
-                     <div class="form-check">
-                        <input class="form-check-input filtro-marca" type="checkbox" value="Razer">
-                        <label class="form-check-label">Razer</label>
-                     </div>
-                     <div class="form-check">
-                        <input class="form-check-input filtro-marca" type="checkbox" value="Samsung">
-                        <label class="form-check-label">Samsung</label>
-                     </div>
-                     <div class="form-check">
-                        <input class="form-check-input filtro-marca" type="checkbox" value="Kingston">
-                        <label class="form-check-label">Kingston</label>
-                     </div>
-                  </div>
-               </div>
+   <!-- ===================== SECCIÓN DE PRODUCTOS ===================== -->
+   <section class="products py-5">
+      <div class="container">
+         <div class="row">
 
-               <!-- Categoría -->
-               <div class="mb-4">
-                  <label class="font-weight-bold">Categoría</label>
-                  <div class="filtro-marcas">
-                     <div class="form-check">
-                        <input type="checkbox" class="form-check-input filtro-categoria" value="procesadores">
-                        <label class="form-check-label">Procesadores</label>
-                     </div>
-                     <div class="form-check">
-                        <input type="checkbox" class="form-check-input filtro-categoria" value="tarjetas_graficas">
-                        <label class="form-check-label">Tarjetas gráficas</label>
-                     </div>
-                     <div class="form-check">
-                        <input type="checkbox" class="form-check-input filtro-categoria" value="memorias_ram">
-                        <label class="form-check-label">Memorias RAM</label>
-                     </div>
-                     <div class="form-check">
-                        <input type="checkbox" class="form-check-input filtro-categoria" value="sillas">
-                        <label class="form-check-label">Sillas</label>
-                     </div>
-                     <div class="form-check">
-                        <input type="checkbox" class="form-check-input filtro-categoria" value="monitores">
-                        <label class="form-check-label">Monitores</label>
-                     </div>
-                     <div class="form-check">
-                        <input type="checkbox" class="form-check-input filtro-categoria" value="almacenamiento">
-                        <label class="form-check-label">Almacenamiento</label>
-                     </div>
-                     <div class="form-check">
-                        <input type="checkbox" class="form-check-input filtro-categoria" value="Varios">
-                        <label class="form-check-label">Varios</label>
-                     </div>
-                     <div class="form-check">
-                        <input type="checkbox" class="form-check-input filtro-categoria" value="perifericos">
-                        <label class="form-check-label">Periféricos</label>
-                     </div>
-                     <div class="form-check">
-                        <input type="checkbox" class="form-check-input filtro-categoria" value="placas_base">
-                        <label class="form-check-label">Placas base</label>
-                     </div>
-                     <div class="form-check">
-                        <input type="checkbox" class="form-check-input filtro-categoria" value="fuentes_poder">
-                        <label class="form-check-label">Fuentes de poder</label>
-                     </div>
-                  </div>
-               </div>
+            <!-- Panel lateral con filtros -->
+            <div class="col-lg-3 col-md-4 mb-4">
+               <div class="filtros-panel">
+                  <h5><i class="fa fa-filter"></i> Filtrar por</h5>
 
-               <!-- Rango de Precios -->
-               <div class="rango-precio active" data-min="0" data-max="10000000">
-                  <div class="d-flex justify-content-between">
-                     <span>Todos los precios</span>
+                  <!-- Buscador de productos -->
+                  <div class="mb-4">
+                     <label class="font-weight-bold">Buscar</label>
+                     <div class="input-group">
+                        <input type="text" class="form-control" id="buscadorProductos" placeholder="Buscar productos...">
+                        <div class="input-group-append">
+                           <button class="btn btn-info" type="button">
+                              <i class="fa fa-search"></i>
+                           </button>
+                        </div>
+                     </div>
                   </div>
-               </div>
-               <div class="rango-precio" data-min="0" data-max="200000">
-                  <div class="d-flex justify-content-between">
-                     <span>$0 - $200,000</span>
-                  </div>
-               </div>
-               <div class="rango-precio" data-min="200000" data-max="1000000">
-                  <div class="d-flex justify-content-between">
-                     <span>$200,000 - $1,000,000</span>
-                  </div>
-               </div>
-               <div class="rango-precio" data-min="1000000" data-max="2000000">
-                  <div class="d-flex justify-content-between">
-                     <span>$1,000,000 - $2,000,000</span>
-                  </div>
-               </div>
-               <div class="rango-precio" data-min="2000000" data-max="4000000">
-                  <div class="d-flex justify-content-between">
-                     <span>$2,000,000 - $4,000,000</span>
-                  </div>
-               </div>
-               <div class="rango-precio" data-min="4000000" data-max="7000000">
-                  <div class="d-flex justify-content-between">
-                     <span>$4,000,000 - $7,000,000</span>
-                  </div>
-               </div>
-               <div class="rango-precio" data-min="7000000" data-max="10000000">
-                  <div class="d-flex justify-content-between">
-                     <span>$7,000,000 - $10,000,000</span>
-                  </div>
-               </div>
-            </div>
-         </div>
 
-         <!-- COLUMNA DERECHA: PRODUCTOS DESTACADOS (lo que estaba en rojo) -->
-         <div class="col-lg-9 col-md-8">
-            <!-- Título de productos destacados (ahora dentro de la columna derecha) -->
-            <h2 class="mb-4" id="titulo-productos">Productos Destacados</h2>
-            
-            <!-- Botones de ordenamiento -->
-            <div class="d-flex justify-content-end mb-4">
-               <div class="btn-group" role="group">
-                  <button class="btn btn-outline-primary" onclick="ordenarPrecio('asc')">Precio: menor a mayor</button>
-                  <button class="btn btn-outline-primary" onclick="ordenarPrecio('desc')">Precio: mayor a menor</button>
+                  <!-- Filtro por marcas -->
+                  <div class="mb-4">
+                     <label class="font-weight-bold">Marca</label>
+                     <div class="filtro-marcas">
+                        <div class="form-check"><input class="form-check-input filtro-marca" type="checkbox" value="Corsair"><label class="form-check-label">Corsair</label></div>
+                        <div class="form-check"><input class="form-check-input filtro-marca" type="checkbox" value="LG"><label class="form-check-label">LG</label></div>
+                        <div class="form-check"><input class="form-check-input filtro-marca" type="checkbox" value="Cooler Master"><label class="form-check-label">Cooler Master</label></div>
+                        <div class="form-check"><input class="form-check-input filtro-marca" type="checkbox" value="Lenovo"><label class="form-check-label">Lenovo</label></div>
+                        <div class="form-check"><input class="form-check-input filtro-marca" type="checkbox" value="AMD"><label class="form-check-label">AMD</label></div>
+                        <div class="form-check"><input class="form-check-input filtro-marca" type="checkbox" value="Intel"><label class="form-check-label">Intel</label></div>
+                        <div class="form-check"><input class="form-check-input filtro-marca" type="checkbox" value="Gigabyte"><label class="form-check-label">Gigabyte</label></div>
+                        <div class="form-check"><input class="form-check-input filtro-marca" type="checkbox" value="ASUS"><label class="form-check-label">ASUS</label></div>
+                        <div class="form-check"><input class="form-check-input filtro-marca" type="checkbox" value="MSI"><label class="form-check-label">MSI</label></div>
+                        <div class="form-check"><input class="form-check-input filtro-marca" type="checkbox" value="Logitech"><label class="form-check-label">Logitech</label></div>
+                        <div class="form-check"><input class="form-check-input filtro-marca" type="checkbox" value="Razer"><label class="form-check-label">Razer</label></div>
+                        <div class="form-check"><input class="form-check-input filtro-marca" type="checkbox" value="Samsung"><label class="form-check-label">Samsung</label></div>
+                     </div>
+                  </div>
+
+                  <!-- Filtro por categorías -->
+                  <div class="mb-4">
+                     <label class="font-weight-bold">Categoría</label>
+                     <div class="filtro-categorias">
+                        <div class="form-check"><input type="checkbox" class="form-check-input filtro-categoria" value="procesadores"><label class="form-check-label">Procesadores</label></div>
+                        <div class="form-check"><input type="checkbox" class="form-check-input filtro-categoria" value="tarjetas_graficas"><label class="form-check-label">Tarjetas gráficas</label></div>
+                        <div class="form-check"><input type="checkbox" class="form-check-input filtro-categoria" value="memorias_ram"><label class="form-check-label">Memorias RAM</label></div>
+                        <div class="form-check"><input type="checkbox" class="form-check-input filtro-categoria" value="sillas"><label class="form-check-label">Sillas</label></div>
+                        <div class="form-check"><input type="checkbox" class="form-check-input filtro-categoria" value="monitores"><label class="form-check-label">Monitores</label></div>
+                        <div class="form-check"><input type="checkbox" class="form-check-input filtro-categoria" value="almacenamiento"><label class="form-check-label">Almacenamiento</label></div>
+                        <div class="form-check"><input type="checkbox" class="form-check-input filtro-categoria" value="Varios"><label class="form-check-label">Varios</label></div>
+                        <div class="form-check"><input type="checkbox" class="form-check-input filtro-categoria" value="perifericos"><label class="form-check-label">Periféricos</label></div>
+                     </div>
+                  </div>
+
+                  <!-- Filtro por rango de precios -->
+                  <!-- Cada bloque guarda min y max en data-* -->
+                  <div class="rango-precio active" data-min="0" data-max="10000000"><span>Todos los precios</span></div>
+                  <div class="rango-precio" data-min="0" data-max="200000"><span>$0 - $200,000</span></div>
+                  <div class="rango-precio" data-min="200000" data-max="1000000"><span>$200,000 - $1,000,000</span></div>
+                  <div class="rango-precio" data-min="1000000" data-max="2000000"><span>$1,000,000 - $2,000,000</span></div>
+                  <div class="rango-precio" data-min="2000000" data-max="4000000"><span>$2,000,000 - $4,000,000</span></div>
                </div>
             </div>
 
-            <!-- Contenedor de productos (grid de 3 columnas) -->
-            <div class="row" id="products-container">
-               <!-- Los productos se cargarán aquí dinámicamente con JavaScript -->
-            </div>
-            
-            <!-- Controles de paginación -->
-            <div class="pagination-controls mt-4">
-               <button class="btn btn-info" id="prevPage" onclick="cambiarPagina(-1)">
-                  <i class="fa fa-chevron-left"></i> Anterior
-               </button>
-               <span class="page-info" id="pageInfo">Página 1 de 5</span>
-               <button class="btn btn-info" id="nextPage" onclick="cambiarPagina(1)">
-                  Siguiente <i class="fa fa-chevron-right"></i>
-               </button>
+            <!-- Área principal donde se renderizan los productos -->
+            <div class="col-lg-9 col-md-8">
+               <h2 class="mb-4" id="titulo-productos">Productos Destacados</h2>
+
+               <!-- Botones para ordenar precios -->
+               <div class="d-flex justify-content-end mb-4">
+                  <div class="btn-group" role="group">
+                     <button class="btn btn-outline-primary" onclick="ordenarPrecio('asc')">Precio: menor a mayor</button>
+                     <button class="btn btn-outline-primary" onclick="ordenarPrecio('desc')">Precio: mayor a menor</button>
+                  </div>
+               </div>
+
+               <!-- Aquí JavaScript inserta las tarjetas de productos -->
+               <div class="row" id="products-container"></div>
+
+               <!-- Paginación -->
+               <div class="pagination-controls mt-4">
+                  <button class="btn btn-info" id="prevPage" onclick="cambiarPagina(-1)">
+                     <i class="fa fa-chevron-left"></i> Anterior
+                  </button>
+
+                  <span class="page-info" id="pageInfo">Página 1</span>
+
+                  <button class="btn btn-info" id="nextPage" onclick="cambiarPagina(1)">
+                     Siguiente <i class="fa fa-chevron-right"></i>
+                  </button>
+               </div>
             </div>
          </div>
       </div>
-   </div>
-</section>
+   </section>
 
+   <!-- ===================== CONTACTO ===================== -->
    <section class="contact py-5 bg-light">
       <div class="container">
          <h2 class="text-center mb-4">Contáctanos</h2>
@@ -506,13 +412,14 @@
                   <input class="contactus" placeholder="Nombre" type="text">
                   <input class="contactus" placeholder="Email" type="email">
                   <textarea class="textarea" placeholder="Mensaje"></textarea>
-                  <button class="btn btn-info btn-block">Enviar</button>
+                  <button class="btn btn-info btn-block" type="button">Enviar</button>
                </form>
             </div>
          </div>
       </div>
    </section>
 
+   <!-- ===================== FOOTER ===================== -->
    <footer class="bg-dark text-light py-4 text-center">
       <div class="container">
          <h5 class="text-info">QuantumTech</h5>
@@ -521,11 +428,13 @@
       </div>
    </footer>
 
+   <!-- Notificación flotante al agregar al carrito -->
    <div id="toast-cart" class="toast-cart">
       Producto agregado al carrito
    </div>
 
-   <!-- LOGIN MODAL -->
+   <!-- ===================== MODAL LOGIN ===================== -->
+   <!-- Ventana emergente para iniciar sesión sin salir del index -->
    <div class="modal fade" id="loginModal">
       <div class="modal-dialog">
          <div class="modal-content">
@@ -537,178 +446,151 @@
                <form id="loginForm">
                   <input type="text" class="form-control mb-3" placeholder="Usuario" required>
                   <input type="password" class="form-control mb-3" placeholder="Contraseña" required>
-                  <button class="btn btn-info btn-block">Ingresar</button>
+                  <button class="btn btn-info btn-block" type="submit">Ingresar</button>
                </form>
             </div>
          </div>
       </div>
    </div>
 
+   <!-- Librerías JS -->
    <script src="js/jquery.min.js"></script>
    <script src="js/popper.min.js"></script>
    <script src="js/bootstrap.bundle.min.js"></script>
 
    <script>
+      // ===================== VARIABLES GLOBALES =====================
+      // paginaActual: controla qué página de productos se muestra
+      // productosPorPagina: cuántos productos se ven por página
+      let paginaActual = 1;
+      let productosPorPagina = 6;
 
-      // ========== FUNCIÓN PARA SELECCIONAR RANGO DE PRECIO ==========
- function seleccionarRango(elemento) {
+      // filtros: objeto central para guardar el estado de búsqueda y filtros
+      let filtros = {
+         texto: "",
+         marcas: [],
+         precio: { min: 0, max: 10000000 },
+         ordenPrecio: null,
+         categorias: []
+      };
 
-   document.querySelectorAll(".rango-precio").forEach(r => {
-      r.classList.remove("active");
-   });
-
-   elemento.classList.add("active");
-
-   const min = parseInt(elemento.dataset.min);
-   const max = parseInt(elemento.dataset.max);
-
-   filtros.precio = { min, max };
-
-   console.log("Filtro aplicado:", filtros.precio);
-
-   const textoPrecio = document.getElementById("precio-seleccionado");
-   if (textoPrecio) {
-      textoPrecio.textContent = `$${min.toLocaleString()} - $${max.toLocaleString()}`;
-   }
-
-   paginaActual = 1;
-   cargarProductos();
-}
-// función para formatear precios
-function formatearPrecio(valor) {
-   return valor.toLocaleString("es-CO");
-}
-// funciones de UI
-function seleccionarRango() { }
-
-// VARIABLES GLOBALES
-let paginaActual = 1;
-let productosPorPagina = 6;
-
-let filtros = {
-   texto: "",
-   marcas: [],
-   tamanos: [],
-   precio: { min: 0, max: 10000000 },
-   ordenPrecio: null,
-   categorias: []
-};
-// PRODUCTOS
-function obtenerProductos(){}
-
-// FILTROS
-function filtrarProductos(){}
-// ORDENAR POR PRECIO
-function ordenarPrecio(tipo) {
-
-   filtros.ordenPrecio = tipo; // asc o desc
-
-   paginaActual = 1;
-
-   cargarProductos();
-
-}
-
-// ORDENAR PRODUCTOS
-function ordenarProductos(productos) {
-
-   if (!filtros.ordenPrecio) return productos;
-
-   if (filtros.ordenPrecio === "asc") {
-      return productos.sort((a, b) => a.price - b.price);
-   }
-
-   if (filtros.ordenPrecio === "desc") {
-      return productos.sort((a, b) => b.price - a.price);
-   }
-
-   return productos;
-}
-
-// CARGAR PRODUCTOS
-function cargarProductos(){}
-      // ========== PRODUCTOS ==========
-function obtenerProductos() {
-   return [
-      { name: "Teclado Tipo Gamer", price: 230000, image: "images/product1.png", marca: "Razer", categoria: "perifericos" },
-      { name: "Mouse Gamer 16000 DPI", price: 120000, image: "images/product2.png", marca: "Razer", categoria: "perifericos" },
-      { name: "Camara PRO WEB", price: 450000, image: "images/product3.png", marca: "Logitech", categoria: "perifericos" },
-      { name: "Parlantes Sonoros BASS", price: 1200000, image: "images/product4.png", marca: "Samsung", categoria: "Varios" },
-      { name: "Router v4", price: 320000, image: "images/product5.png", marca: "TP-Link", categoria: "Varios" },
-      { name: "NVMe 1TB HDD Toshiba", price: 180000, image: "images/product6.png", marca: "Toshiba", categoria: "almacenamiento" },
-      { name: "Monitor Gamer Curvo Samsung 27'' 144Hz", price: 950000, image: "images/product7.png", marca: "Samsung", categoria: "monitores" },
-      { name: "Silla Gamer Profesional Reclinable Negra", price: 750000, image: "images/product8.png", marca: "Corsair", categoria: "sillas" },
-      { name: "Disco SSD Externo Samsung 1TB USB 3.0", price: 320000, image: "images/product9.png", marca: "Samsung", categoria: "almacenamiento" },
-      { name: "Audífonos Bluetooth Sony con Cancelación Ruido", price: 680000, image: "images/product10.png", marca: "Sony", categoria: "perifericos" },
-      { name: "Tablet Samsung Galaxy Tab A8 10.5''", price: 820000, image: "images/product11.png", marca: "Samsung", categoria: "Varios" },
-      { name: "Smartwatch Xiaomi Mi Band 7", price: 180000, image: "images/product12.png", marca: "Xiaomi", categoria: "Varios" },
-      { name: "Parlante Inteligente Alexa Echo Dot 4ta Gen", price: 210000, image: "images/product13.png", marca: "Amazon", categoria: "Varios" },
-      { name: "Proyector Portátil XGOMI 4K", price: 890000, image: "images/product14.png", marca: "XGOMI", categoria: "Varios" },
-      { name: "Impresora Multifuncional Epson EcoTank", price: 720000, image: "images/product15.png", marca: "Epson", categoria: "Varios" },
-      { name: "Router Mesh TP-Link Deco M4", price: 380000, image: "images/product16.png", marca: "TP-Link", categoria: "Varios" },
-      { name: "Webcam Logitech C920s HD Pro", price: 290000, image: "images/product17.png", marca: "Logitech", categoria: "perifericos" },
-      { name: "Micrófono Profesional Blue Yeti USB", price: 450000, image: "images/product18.png", marca: "Blue", categoria: "perifericos" },
-      { name: "Tarjeta Gráfica NVIDIA RTX 3060 12GB", price: 2100000, image: "images/product19.png", marca: "Nvidia", categoria: "tarjetas_graficas" },
-      { name: "Fuente de Poder Corsair 750W 80 Plus Gold", price: 420000, image: "images/product20.png", marca: "Corsair", categoria: "fuentes_poder" },
-      { name: "Gabinete Gamer RGB Vidrio Templado", price: 280000, image: "images/product21.png", marca: "Corsair", categoria: "Varios" },
-      { name: "Ventilador CPU Cooler Master RGB", price: 95000, image: "images/product22.png", marca: "Cooler Master", categoria: "Varios" },
-      { name: "Adaptador Bluetooth USB 5.0", price: 35000, image: "images/product23.png", marca: "TP-Link", categoria: "perifericos" },
-      { name: "Cable HDMI 2.1 3 Metros Ultra HD", price: 65000, image: "images/product24.png", marca: "Samsung", categoria: "Varios" },
-      { name: "Laptop Lenovo IdeaPad 3 15.6''", price: 1850000, image: "images/product25.png", marca: "Lenovo", categoria: "Varios" },
-      { name: "Mouse Pad Gamer XXL RGB", price: 110000, image: "images/product26.png", marca: "Razer", categoria: "perifericos" },
-      { name: "Soporte Pared para TV 32-65''", price: 135000, image: "images/product27.png", marca: "Samsung", categoria: "Varios" },
-      { name: "Cargador Rápido Samsung 25W", price: 55000, image: "images/product28.png", marca: "Samsung", categoria: "Varios" },
-      { name: "Funda para Laptop 15.6'' Impermeable", price: 75000, image: "images/product29.png", marca: "Generic", categoria: "Varios" },
-      { name: "Limpieza para Pantalla Kit Completo", price: 45000, image: "images/product30.png", marca: "Generic", categoria: "Varios" }
-   ];
-   let productosGuardados = JSON.parse(localStorage.getItem("products")) || [];
-
-   // combinar productos base + productos agregados por admin
-   let todosLosProductos = [...productosDefault, ...productosGuardados];
-
-   // eliminar duplicados por ID
-   const mapa = new Map();
-   todosLosProductos.forEach(p => {
-      if (!mapa.has(p.id)) {
-         mapa.set(p.id, p);
+      // ===================== LISTA BASE DE PRODUCTOS =====================
+      // Esta función devuelve el catálogo base de productos
+      function obtenerProductos() {
+         return [
+            { name: "Teclado Tipo Gamer", price: 230000, image: "images/product1.png", marca: "Razer", categoria: "perifericos" },
+            { name: "Mouse Gamer 16000 DPI", price: 120000, image: "images/product2.png", marca: "Razer", categoria: "perifericos" },
+            { name: "Camara PRO WEB", price: 450000, image: "images/product3.png", marca: "Logitech", categoria: "perifericos" },
+            { name: "Parlantes Sonoros BASS", price: 1200000, image: "images/product4.png", marca: "Samsung", categoria: "Varios" },
+            { name: "Monitor Gamer Curvo Samsung 27'' 144Hz", price: 950000, image: "images/product7.png", marca: "Samsung", categoria: "monitores" },
+            { name: "Silla Gamer Profesional Reclinable Negra", price: 750000, image: "images/product8.png", marca: "Corsair", categoria: "sillas" },
+            { name: "Tarjeta Gráfica NVIDIA RTX 3060 12GB", price: 2100000, image: "images/product19.png", marca: "Nvidia", categoria: "tarjetas_graficas" },
+            { name: "Fuente de Poder Corsair 750W 80 Plus Gold", price: 420000, image: "images/product20.png", marca: "Corsair", categoria: "fuentes_poder" },
+            { name: "Laptop Lenovo IdeaPad 3 15.6''", price: 1850000, image: "images/product25.png", marca: "Lenovo", categoria: "Varios" }
+         ];
       }
-   });
 
-   const productosFinales = Array.from(mapa.values());
+      // ===================== FILTRAR PRODUCTOS =====================
+      // Recibe una lista de productos y devuelve solo los que cumplen los filtros activos
+      function filtrarProductos(productos) {
+         return productos.filter(producto => {
+            const coincideTexto =
+               producto.name.toLowerCase().includes(filtros.texto);
 
-   // guardar versión limpia
-   localStorage.setItem("products", JSON.stringify(productosFinales));
+            const coincidePrecio =
+               producto.price >= filtros.precio.min &&
+               producto.price <= filtros.precio.max;
 
-   return productosFinales;
-}
+            const coincideMarca =
+               filtros.marcas.length === 0 || filtros.marcas.includes(producto.marca);
 
-function filtrarProductos(productos) {
-   return productos.filter(producto => {
-      const precio = Number(producto.price);
-      // FILTRO POR PRECIO
-      if (precio < filtros.precio.min || precio > filtros.precio.max) {
-         return false;
+            const coincideCategoria =
+               filtros.categorias.length === 0 || filtros.categorias.includes(producto.categoria);
+
+            return coincideTexto && coincidePrecio && coincideMarca && coincideCategoria;
+         });
       }
-      // FILTRO POR MARCAS
-      if (filtros.marcas && filtros.marcas.length > 0) {
-         if (!filtros.marcas.includes(producto.marca)) {
-            return false;
+
+      // ===================== ORDENAR PRODUCTOS =====================
+      // Ordena por precio ascendente o descendente según el filtro actual
+      function ordenarProductos(productos) {
+         if (filtros.ordenPrecio === "asc") {
+            return productos.sort((a, b) => a.price - b.price);
          }
-      }
-      // FILTRO POR CATEGORIAS
-      if (filtros.categorias && filtros.categorias.length > 0) {
-         if (!filtros.categorias.includes(producto.categoria)) {
-            return false;
+         if (filtros.ordenPrecio === "desc") {
+            return productos.sort((a, b) => b.price - a.price);
          }
+         return productos;
       }
-      return true;
-   });
-}
-      // ========== AGREGAR AL CARRITO ==========
+
+      // Esta función solo cambia el criterio de orden y recarga la vista
+      function ordenarPrecio(tipo) {
+         filtros.ordenPrecio = tipo;
+         paginaActual = 1;
+         cargarProductos();
+      }
+
+      // ===================== CARGAR PRODUCTOS EN EL HTML =====================
+      // Toma la lista, aplica filtros, ordena, pagina y renderiza en pantalla
+      function cargarProductos() {
+         let productos = obtenerProductos();
+         productos = filtrarProductos(productos);
+         productos = ordenarProductos(productos);
+
+         const contenedor = document.getElementById("products-container");
+         const pageInfo = document.getElementById("pageInfo");
+
+         const totalPaginas = Math.ceil(productos.length / productosPorPagina) || 1;
+
+         // Evita que paginaActual se salga de rango
+         if (paginaActual < 1) paginaActual = 1;
+         if (paginaActual > totalPaginas) paginaActual = totalPaginas;
+
+         const inicio = (paginaActual - 1) * productosPorPagina;
+         const fin = inicio + productosPorPagina;
+         const productosAMostrar = productos.slice(inicio, fin);
+
+         contenedor.innerHTML = "";
+
+         productosAMostrar.forEach(producto => {
+            contenedor.innerHTML += `
+               <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                  <div class="product_box shadow">
+                     <img src="${producto.image}" alt="${producto.name}">
+                     <h5>${producto.name}</h5>
+                     <p class="text-primary font-weight-bold">$${producto.price.toLocaleString()} COP</p>
+                     <button class="btn btn-info"
+                        data-name="${producto.name}"
+                        data-price="${producto.price}"
+                        data-image="${producto.image}"
+                        onclick="agregarAlCarrito(this)">
+                        Agregar al carrito
+                     </button>
+                  </div>
+               </div>
+            `;
+         });
+
+         pageInfo.textContent = `Página ${paginaActual} de ${totalPaginas}`;
+      }
+
+      // ===================== CAMBIAR DE PÁGINA =====================
+      // direccion = -1 va a la anterior, direccion = 1 va a la siguiente
+      function cambiarPagina(direccion) {
+         paginaActual += direccion;
+         cargarProductos();
+
+         // Desplaza suavemente al título para que el usuario vea el cambio
+         const titulo = document.getElementById("titulo-productos");
+         titulo.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      // ===================== AGREGAR PRODUCTO AL CARRITO =====================
+      // Lee datos del botón, actualiza localStorage y refresca el contador
       function agregarAlCarrito(boton) {
-         const nombre = boton.getAttribute('data-name');
-         const precio = parseInt(boton.getAttribute('data-price'));
-         const imagen = boton.getAttribute('data-image');
+         const nombre = boton.getAttribute("data-name");
+         const precio = parseInt(boton.getAttribute("data-price"));
+         const imagen = boton.getAttribute("data-image");
 
          let carrito = JSON.parse(localStorage.getItem("cart")) || [];
          const existente = carrito.find(item => item.name === nombre);
@@ -734,94 +616,22 @@ function filtrarProductos(productos) {
          }, 2000);
       }
 
-      // ========== CARGAR PRODUCTOS ==========
-         function cargarProductos() {
-
-         let productos = obtenerProductos();
-
-         // aplicar filtros de precio u otros
-         productos = filtrarProductos(productos);
-
-         // aplicar orden seleccionado
-         productos = ordenarProductos(productos);
-
-         const contenedor = document.getElementById("products-container");
-
-         const inicio = (paginaActual - 1) * productosPorPagina;
-         const fin = inicio + productosPorPagina;
-
-         const productosAMostrar = productos.slice(inicio, fin);
-
-         contenedor.innerHTML = "";
-
-         productosAMostrar.forEach(producto => {
-
-            contenedor.innerHTML += `
-               <div class="col-lg-4 col-md-6 col-sm-12">
-                  <div class="product_box shadow">
-
-                     <img src="${producto.image}" alt="${producto.name}">
-                     <h5>${producto.name}</h5>
-
-                     <p class="text-primary font-weight-bold">
-                        $${producto.price.toLocaleString()} COP
-                     </p>
-
-                     <button class="btn btn-info"
-                        data-name="${producto.name}"
-                        data-price="${producto.price}"
-                        data-image="${producto.image}"
-                        onclick="agregarAlCarrito(this)">
-                        Agregar al carrito
-                     </button>
-
-                  </div>
-               </div>
-            `;
-   });
-
-}
-// ========== MOSTRAR PRODUCTOS (SIN PAGINACIÓN) ==========
-      function mostrarProductos(lista) {
-
-   const contenedor = document.getElementById("contenedor-productos");
-   contenedor.innerHTML = "";
-
-   lista.forEach(producto => {
-
-      contenedor.innerHTML += `
-         <div class="producto">
-            <h5>${producto.nombre}</h5>
-            <p>$${producto.precio.toLocaleString()}</p>
-         </div>
-      `;
-
-   });
-
-}
-      // ========== CAMBIAR PÁGINA ==========
-      function cambiarPagina(direccion) {
-         paginaActual += direccion;
-         cargarProductos();
-         
-         const titulo = document.getElementById('titulo-productos');
-         titulo.scrollIntoView({ 
-            behavior: 'smooth', 
-            block: 'start' 
-         });
-      }
-
-      // ========== ACTUALIZAR CONTADOR DEL CARRITO ==========
+      // ===================== ACTUALIZAR CONTADOR DEL CARRITO =====================
+      // Suma la cantidad total de productos guardados en localStorage
       function actualizarContadorCarrito() {
          const carrito = JSON.parse(localStorage.getItem("cart")) || [];
          let total = 0;
+
          carrito.forEach(item => {
             total += item.quantity;
          });
+
          document.getElementById("cart-count").textContent = total;
       }
 
-      // ========== LOGIN ==========
+      // ===================== LOGIN =====================
+      // Maneja el envío del formulario del modal
+      // Si las credenciales coinciden, guarda el usuario en localStorage
       document.getElementById("loginForm").addEventListener("submit", function (e) {
          e.preventDefault();
 
@@ -833,166 +643,130 @@ function filtrarProductos(productos) {
                email: "admin",
                rol: "Administrador"
             }));
+
             alert("Bienvenido Administrador");
             $('#loginModal').modal('hide');
             verificarLogin();
-            location.reload();
-         } 
+         }
          else if (username === "cliente" && password === "abcd") {
             localStorage.setItem("usuario", JSON.stringify({
                email: "cliente",
                rol: "Cliente"
             }));
+
             alert("Bienvenido Cliente");
             $('#loginModal').modal('hide');
             verificarLogin();
-            location.reload();
-         } 
+         }
          else {
             alert("Usuario o contraseña incorrectos");
          }
       });
 
-      // ========== VERIFICAR LOGIN ==========
+      // ===================== VERIFICAR SI HAY SESIÓN =====================
+      // Esta función revisa si existe "usuario" en localStorage
+      // Si existe: cambia el botón Login por nombre + botón Salir
+      // Si no existe: deja visible el botón Login
       function verificarLogin() {
          const userData = localStorage.getItem("usuario");
          const loginContainer = document.getElementById("login-button-container");
-         const nav = document.getElementById("main-nav");
-         
+         const adminItem = document.getElementById("admin-item");
+
          if (userData) {
             const user = JSON.parse(userData);
-            
-            let adminLink = document.querySelector('.nav-item a[href="admin.html"]');
-            
-            if (user.rol === "Administrador" && !adminLink) {
-               const adminLi = document.createElement('li');
-               adminLi.className = 'nav-item';
-               adminLi.innerHTML = '<a class="nav-link" href="admin.html">Panel Admin</a>';
-               nav.insertBefore(adminLi, nav.children[2]);
-            } else if (adminLink && user.rol !== "Administrador") {
-               adminLink.parentElement.remove();
+
+            if (user.rol === "Administrador") {
+               adminItem.style.display = "block";
+            } else {
+               adminItem.style.display = "none";
             }
-            
+
             loginContainer.innerHTML = `
-               <span class="text-white mr-2">
-                  <i class="fa fa-user"></i> ${user.email} (${user.rol})
-               </span>
-               <button class="btn btn-danger btn-sm" onclick="cerrarSesion()">
-                  Salir
+               <div class="d-flex align-items-center mt-2 mt-lg-0">
+                  <span class="text-white mr-2">
+                     <i class="fa fa-user"></i> ${user.email} (${user.rol})
+                  </span>
+                  <button class="btn btn-danger btn-sm" onclick="cerrarSesion()">
+                     Salir
+                  </button>
+               </div>
+            `;
+         } else {
+            adminItem.style.display = "none";
+
+            loginContainer.innerHTML = `
+               <button class="btn btn-outline-light mt-2 mt-lg-0" data-toggle="modal" data-target="#loginModal">
+                  <i class="fa fa-user"></i> Login
                </button>
             `;
          }
       }
-// ========== CERRAR SESIÓN ==========
-function cerrarSesion() {
-   localStorage.clear();   // elimina todo lo guardado en localStorage
-   sessionStorage.clear(); // elimina todo lo guardado en sessionStorage
-   window.location.href = "login.html";
-}
 
-// ========== INICIALIZACIÓN ==========
-document.addEventListener("DOMContentLoaded", function () {
+      // ===================== CERRAR SESIÓN =====================
+      // Elimina únicamente el usuario logueado y regresa al index
+      function cerrarSesion() {
+         localStorage.removeItem("usuario");
+         window.location.href = "index.html";
+      }
 
-   cargarProductos();
-   actualizarContadorCarrito();
-   verificarLogin();
+      // ===================== EVENTOS DE FILTROS =====================
+      // Cuando cambian las marcas marcadas, se actualiza filtros.marcas y se recarga la vista
+      document.querySelectorAll(".filtro-marca").forEach(cb => {
+         cb.addEventListener("change", () => {
+            filtros.marcas = [...document.querySelectorAll(".filtro-marca:checked")]
+               .map(el => el.value);
 
-   // ACTIVAR BUSCADOR DE PRODUCTOS
-   const buscador = document.getElementById("buscadorProductos");
+            paginaActual = 1;
+            cargarProductos();
+         });
+      });
 
-   if (buscador) {
-      buscador.addEventListener("input", function () {
+      // Cuando cambian las categorías marcadas, se actualiza filtros.categorias y se recarga la vista
+      document.querySelectorAll(".filtro-categoria").forEach(cb => {
+         cb.addEventListener("change", () => {
+            filtros.categorias = [...document.querySelectorAll(".filtro-categoria:checked")]
+               .map(el => el.value);
 
+            paginaActual = 1;
+            cargarProductos();
+         });
+      });
+
+      // Cuando se hace clic en un rango de precio, se guarda min y max activos
+      document.querySelectorAll(".rango-precio").forEach(boton => {
+         boton.addEventListener("click", function () {
+            document.querySelectorAll(".rango-precio").forEach(r => {
+               r.classList.remove("active");
+            });
+
+            this.classList.add("active");
+
+            filtros.precio = {
+               min: parseInt(this.dataset.min),
+               max: parseInt(this.dataset.max)
+            };
+
+            paginaActual = 1;
+            cargarProductos();
+         });
+      });
+
+      // ===================== BUSCADOR =====================
+      // Cada vez que el usuario escribe, se filtra por nombre del producto
+      document.getElementById("buscadorProductos").addEventListener("input", function () {
          filtros.texto = this.value.toLowerCase();
          paginaActual = 1;
          cargarProductos();
-
       });
-   }
 
-});
-
-// ========== ESCUCHAR CAMBIOS ==========
-window.addEventListener('storage', function(e) {
-   if (e.key === 'products') {
-      paginaActual = 1;
-      cargarProductos();
-   }
-});
-   </script>
-
-<!-- tu HTML de productos y filtros arriba -->
-
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-
-   document.querySelectorAll(".rango-precio").forEach(boton => {
-
-      boton.addEventListener("click", function () {
-
-         document.querySelectorAll(".rango-precio").forEach(r => {
-            r.classList.remove("active");
-         });
-
-         this.classList.add("active");
-
-         const min = parseInt(this.dataset.min);
-         const max = parseInt(this.dataset.max);
-
-         filtros.precio = { min, max };
-
-         const textoPrecio = document.getElementById("precio-seleccionado");
-
-         if (textoPrecio) {
-            textoPrecio.textContent =
-               `$${min.toLocaleString()} - $${max.toLocaleString()}`;
-         }
-
-         paginaActual = 1;
-
+      // ===================== INICIALIZACIÓN =====================
+      // Este bloque se ejecuta al cargar completamente el HTML
+      // Sirve para pintar productos, actualizar carrito y revisar sesión
+      document.addEventListener("DOMContentLoaded", function () {
          cargarProductos();
-
+         actualizarContadorCarrito();
+         verificarLogin();
       });
-
-   });
-
-});
-</script>
-<script>
-document.querySelectorAll(".filtro-marca").forEach(cb => {
-
-   cb.addEventListener("change", () => {
-
-      filtros.marcas = [...document.querySelectorAll(".filtro-marca:checked")]
-         .map(el => el.value);
-
-      paginaActual = 1;
-
-      cargarProductos();
-
-   });
-
-});
-
-
-document.querySelectorAll(".filtro-categoria").forEach(cb => {
-
-   cb.addEventListener("change", () => {
-
-      filtros.categorias = [...document.querySelectorAll(".filtro-categoria:checked")]
-         .map(el => el.value);
-
-      paginaActual = 1;
-
-      cargarProductos();
-
-   });
-
-});
-
-</script>
-
-<script src="js/script.js"></script>
+   </script>
 </body>
-
 </html>

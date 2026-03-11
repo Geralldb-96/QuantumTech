@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, send_from_directory
+from flask import Flask, request, jsonify
 from flask_cors import CORS
 
 app = Flask(__name__, static_folder="../Frontend", static_url_path="")
@@ -9,12 +9,16 @@ usuarios = [
     {"email": "cliente", "password": "abcd", "rol": "Cliente"}
 ]
 
+# Ruta principal -> abre index.html
 @app.route("/")
 def home():
-    return send_from_directory("../Frontend", "login.html")
+    return app.send_static_file("index.html")
 
+
+# Ruta para login
 @app.route("/login", methods=["POST"])
 def login():
+
     data = request.get_json()
 
     email = data.get("email")
@@ -32,6 +36,13 @@ def login():
         "status": "error",
         "message": "Credenciales incorrectas"
     }), 401
+
+
+# Permite abrir login.html directamente
+@app.route("/login.html")
+def login_page():
+    return app.send_static_file("login.html")
+
 
 if __name__ == "__main__":
     app.run(debug=True)
